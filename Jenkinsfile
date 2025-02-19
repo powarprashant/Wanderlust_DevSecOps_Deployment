@@ -1,9 +1,9 @@
 @Library('Shared') _
 pipeline {
-    agent {label 'Node'}
+    agent {label 'devopstest'}
     
     environment{
-        SONAR_HOME = tool "Sonar"
+        SONAR_HOME = tool "sonar"
     }
     
     parameters {
@@ -32,7 +32,7 @@ pipeline {
         stage('Git: Code Checkout') {
             steps {
                 script{
-                    code_checkout("https://github.com/DwaipayanSom/Wanderlust_DevSecOps_Deployment.git","main")
+                    code_checkout("https://github.com/powarprashant/Wanderlust_DevSecOps_Deployment.git","main")
                 }
             }
         }
@@ -56,7 +56,7 @@ pipeline {
         stage("SonarQube: Code Analysis"){
             steps{
                 script{
-                    sonarqube_analysis("Sonar","wanderlust","wanderlust")
+                    sonarqube_analysis("sonar","wanderlust","wanderlust")
                 }
             }
         }
@@ -97,11 +97,11 @@ pipeline {
             steps{
                 script{
                         dir('backend'){
-                            docker_build("wanderlust-backend-beta","${params.BACKEND_DOCKER_TAG}","dwaipayansom")
+                            docker_build("wanderlust-backend-beta","${params.BACKEND_DOCKER_TAG}","prashantkpowar")
                         }
                     
                         dir('frontend'){
-                            docker_build("wanderlust-frontend-beta","${params.FRONTEND_DOCKER_TAG}","dwaipayansom")
+                            docker_build("wanderlust-frontend-beta","${params.FRONTEND_DOCKER_TAG}","prashantkpowar")
                         }
                 }
             }
@@ -110,8 +110,8 @@ pipeline {
         stage("Docker: Push to DockerHub"){
             steps{
                 script{
-                    docker_push("wanderlust-backend-beta","${params.BACKEND_DOCKER_TAG}","dwaipayansom") 
-                    docker_push("wanderlust-frontend-beta","${params.FRONTEND_DOCKER_TAG}","dwaipayansom")
+                    docker_push("wanderlust-backend-beta","${params.BACKEND_DOCKER_TAG}","prashantkpowar") 
+                    docker_push("wanderlust-frontend-beta","${params.FRONTEND_DOCKER_TAG}","prashantkpowar")
                 }
             }
         }
