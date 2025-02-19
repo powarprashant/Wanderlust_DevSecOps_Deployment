@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Setting the Instance ID and path to the .env file
-INSTANCE_ID="i-i-09c1ce9efcfa0c21a"
+INSTANCE_ID="i-09c1ce9efcfa0c21a"
 
 # Retrieving the public IP address of the specified EC2 instance
 ipv4_address=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
